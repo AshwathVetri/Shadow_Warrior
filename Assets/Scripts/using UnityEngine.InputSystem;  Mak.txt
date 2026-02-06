@@ -1,0 +1,31 @@
+using UnityEngine.InputSystem; // Make sure this is at the top
+
+// Inside your class:
+private PlayerControls controls;
+private Vector2 moveInput;
+private bool jumpInput;
+
+void Awake()
+{
+    controls = new PlayerControls();
+    controls.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
+    controls.Player.Move.canceled += ctx => moveInput = Vector2.zero;
+
+    controls.Player.Jump.performed += ctx => jumpInput = ctx.ReadValueAsButton();
+    controls.Player.Jump.canceled += ctx => jumpInput = false;
+}
+
+void OnEnable() => controls.Enable();
+void OnDisable() => controls.Disable();
+
+void Update()
+{
+    Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
+    controller.Move(move * speed * Time.deltaTime);
+
+    if (jumpInput && isGrounded)
+        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+
+    velocity.y += gravity * Time.deltaTime;
+    controller.Move(velocity * Time.deltaTime);
+}
