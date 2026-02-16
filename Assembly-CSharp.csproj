@@ -51,6 +51,7 @@
     <Compile Include="Assets\Samples\Cinemachine\3.1.5\Shared Assets\Scripts\SimplePlayerAimController.cs" />
     <Compile Include="Assets\Samples\Cinemachine\3.1.5\Shared Assets\Scripts\RandomizedDollySpeed.cs" />
     <Compile Include="Assets\Samples\Cinemachine\3.1.5\Shared Assets\Scripts\CursorLockManager.cs" />
+    <Compile Include="Assets\Forst\CTI Runtime Components\CTI Runtime Components BIRP\Scripts\CTI_Utils.cs" />
     <Compile Include="Assets\Samples\Cinemachine\3.1.5\Shared Assets\Scripts\SamplesDynamicUI.cs" />
     <Compile Include="Assets\Samples\Cinemachine\3.1.5\Input System Samples\Split Screen Multiplayer\CustomInputHandler.cs" />
     <Compile Include="Assets\Samples\Cinemachine\3.1.5\Shared Assets\Scripts\PerspectiveToOrthoCustomBlender.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Assets\Samples\Cinemachine\3.1.5\Shared Assets\Scripts\Magnet.cs" />
     <Compile Include="Assets\Samples\Cinemachine\3.1.5\Input System Samples\Split Screen Multiplayer\ConstantOrbitalRotation.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Forst\CTI Runtime Components\CTI Runtime Components BIRP\Scripts\CTI_CustomWind.cs" />
     <Compile Include="Assets\Samples\Cinemachine\3.1.5\Shared Assets\Scripts\RigidbodyInterpolationSetter.cs" />
     <Compile Include="Assets\Samples\Cinemachine\3.1.5\Shared Assets\Scripts\SimplePlayerOnSurface.cs" />
     <Compile Include="Assets\Samples\Cinemachine\3.1.5\Shared Assets\Scripts\TurnAroundPlayer.cs" />
@@ -95,9 +97,21 @@
     <Compile Include="Assets\Samples\Cinemachine\3.1.5\Shared Assets\Scripts\FlyAround.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Forst\CTI Runtime Components\CTI Runtime Components BIRP\Shaders\CTI_LOD_Bark_Array_301.shader" />
+    <None Include="Assets\Forst\CTI Runtime Components\CTI Runtime Components BIRP\Shaders\CTI_LOD_Billboard_301.shader" />
+    <None Include="Assets\Forst\CTI Runtime Components\CTI Runtime Components BIRP\Resources\CTI_Camera-DepthNormalTexture_301.shader" />
     <None Include="Assets\Samples\Cinemachine\3.1.5\Shared Assets\UI\SampleHelpUI.uxml" />
+    <None Include="Assets\Forst\CTI Runtime Components\CTI Runtime Components BIRP\Resources\CTI_Internal-DeferredShading.shader" />
     <None Include="Assets\Samples\Cinemachine\3.1.5\Shared Assets\UI\SamplesUIStyle.uss" />
+    <None Include="Assets\Forst\CTI Runtime Components\CTI Runtime Components BIRP\Shaders\Includes\CTI_BillboardVertex_301.cginc" />
+    <None Include="Assets\Forst\CTI Runtime Components\CTI Runtime Components BIRP\Shaders\Includes\CTI_TranslucentLighting_301.cginc" />
     <None Include="Assets\Scripts\using UnityEngine.InputSystem%3b  Mak.txt" />
+    <None Include="Assets\Forst\CTI Runtime Components\CTI Runtime Components BIRP\Shaders\CTI_LOD_Bark_301.shader" />
+    <None Include="Assets\Forst\CTI Runtime Components\CTI Runtime Components BIRP\Resources\CTI_Internal-DeferredReflections.shader" />
+    <None Include="Assets\Forst\CTI Runtime Components\CTI Runtime Components BIRP\Shaders\Includes\CTI_indirect.cginc" />
+    <None Include="Assets\Forst\CTI Runtime Components\CTI Runtime Components BIRP\Shaders\CTI_Debug.shader" />
+    <None Include="Assets\Forst\CTI Runtime Components\CTI Runtime Components BIRP\Shaders\CTI_LOD_Leaves_301.shader" />
+    <None Include="Assets\Forst\CTI Runtime Components\CTI Runtime Components BIRP\Shaders\Includes\CTI_Builtin4xTreeLibraryTumbling_301.cginc" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
