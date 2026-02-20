@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed = 5f;
     public float crouchSpeed = 2.5f;
+    public float rotationSpeed = 10f;
 
     [Header("Jump Settings")]
     public float jumpHeight = 1.6f;
@@ -16,13 +17,14 @@ public class PlayerMovement : MonoBehaviour
     private float originalHeight;
 
     private float verticalVelocity;
+    private float speedSmoothVelocity;
 
     private CharacterController controller;
     private Animator animator;
 
     private bool isCrouching;
 
-    // 🔥 Combo System
+    // Combo
     private int comboStep = 0;
     private float comboTimer = 0f;
     public float comboResetTime = 1f;
@@ -31,7 +33,6 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-
         originalHeight = controller.height;
     }
 
@@ -41,15 +42,14 @@ public class PlayerMovement : MonoBehaviour
         Movement();
         Jump();
         Crouch();
+        Block();
         ComboAttack();
     }
 
     void ApplyGravity()
     {
         if (controller.isGrounded && verticalVelocity < 0)
-        {
-            verticalVelocity = -2f; // stick to ground
-        }
+            verticalVelocity = -2f;
         else
         {
             verticalVelocity += gravity * Time.deltaTime;
@@ -57,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
             if (verticalVelocity < 0)
                 verticalVelocity += gravity * (fallMultiplier - 1) * Time.deltaTime;
         }
+
+        animator.SetFloat("YVelocity", verticalVelocity);
     }
 
     void Movement()
@@ -64,17 +66,35 @@ public class PlayerMovement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        float currentSpeed = isCrouching ? crouchSpeed : moveSpeed;
+        Vector3 move = new Vector3(x, 0, z).normalized;
 
-        Vector3 move = transform.right * x + transform.forward * z;
+        float targetSpeed = move.magnitude * (isCrouching ? crouchSpeed : moveSpeed);
 
-        Vector3 finalMove = move * currentSpeed;
+        // Smooth speed like AAA games
+        float currentSpeed = Mathf.SmoothDamp(
+            controller.velocity.magnitude,
+            targetSpeed,
+            ref speedSmoothVelocity,
+            0.1f
+        );
+
+        if (move.magnitude >= 0.1f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(move);
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                targetRotation,
+                rotationSpeed * Time.deltaTime
+            );
+        }
+
+        Vector3 finalMove = transform.forward * currentSpeed;
         finalMove.y = verticalVelocity;
 
         controller.Move(finalMove * Time.deltaTime);
 
-        animator.SetBool("isWalking", move.magnitude > 0.1f);
-        animator.SetBool("isCrouching", isCrouching);
+        // ⭐ AAA uses float speed, not bool
+        animator.SetFloat("Speed", currentSpeed);
     }
 
     void Jump()
@@ -85,7 +105,6 @@ public class PlayerMovement : MonoBehaviour
             animator.SetTrigger("Jump");
         }
     }
-    
 
     void Crouch()
     {
@@ -102,6 +121,13 @@ public class PlayerMovement : MonoBehaviour
             controller.height = originalHeight;
             controller.center = new Vector3(0, originalHeight / 2f, 0);
         }
+    }
+
+    void Block()
+    {
+        // Hold Q to block (float instead of bool)
+        float blockValue = Input.GetKey(KeyCode.Q) ? 1f : 0f;
+        animator.SetFloat("Block", blockValue);
     }
 
     void ComboAttack()
